@@ -19,12 +19,19 @@ final class Block: Content {
             return getKey()
         }
     }
+    public var transactions: [Transaction] = []
     
     init() {
         self.nonce = 0
     }
     
+    func addTransaction(transaction: Transaction) {
+        self.transactions.append(transaction)
+    }
+    
     private func getKey() -> String {
-        return String(self.index) + self.previousHash + String(self.nonce)
+        let transactionData = try! JSONEncoder().encode(self.transactions)
+        let transactionJSONString = String(data: transactionData, encoding: .utf8) ?? ""
+        return String(self.index) + self.previousHash + String(self.nonce) + transactionJSONString
     }
 }

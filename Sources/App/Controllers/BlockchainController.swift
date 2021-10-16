@@ -19,4 +19,14 @@ class BlockchainController {
     func getBlockchain(req: Request) -> Blockchain {
         return self.blockchainService.getBlockchain()
     }
+    
+    func transaction(req: Request) -> EventLoopFuture<Block> {
+        do {
+            let transaction = try req.content.decode(Transaction.self)
+            return req.eventLoop.makeSucceededFuture(self.blockchainService.getNextBlock(transactions: [transaction]))
+        }
+        catch(let error) {
+            return req.eventLoop.makeFailedFuture(error)
+        }
+    }
 }

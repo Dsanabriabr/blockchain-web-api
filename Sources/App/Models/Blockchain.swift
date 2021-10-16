@@ -39,4 +39,21 @@ final class Blockchain: Content {
         
         return hash
     }
+    
+    func getNextBlock(transactions: [Transaction]) -> Block {
+        let block = Block()
+        transactions.forEach { transaction in
+            block.addTransaction(transaction: transaction)
+        }
+        
+        let previousBlock = getPreviousBlock()
+        block.index = self.blocks.count
+        block.previousHash = previousBlock.hash
+        block.hash = generateHash(for: block)
+        return block
+    }
+    
+    func getPreviousBlock() -> Block {
+        return self.blocks[self.blocks.count - 1]
+    }
 }

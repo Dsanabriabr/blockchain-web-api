@@ -15,10 +15,15 @@ final class Blockchain: Content {
     
     init(genisBlock: Block) {
         addBlock(genisBlock)
+        addSmartContracts()
     }
     
     private enum CodingKeys: CodingKey {
         case blocks
+    }
+    
+    func addSmartContracts() {
+        smartContracts.append(TransactionTypeSmartContract())
     }
     
     func addBlock(_ block: Block) {

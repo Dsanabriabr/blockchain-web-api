@@ -10,9 +10,13 @@ import Vapor
 
 class BlockchainController {
     
-    init() {}
+    private let blockchainService: BlockchainService
     
-    func greet(req: Request) -> EventLoopFuture<String> {
-        return req.eventLoop.makeSucceededFuture("Welcome To Blockchain")
+    init() {
+        self.blockchainService = BlockchainService()
+    }
+    
+    func getBlockchain(req: Request) -> Blockchain {
+        return self.blockchainService.getBlockchain()
     }
 }

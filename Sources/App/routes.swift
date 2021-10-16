@@ -5,5 +5,6 @@ func routes(_ app: Application) throws {
     app.routes.caseInsensitive = true
     
     let blockchain = BlockchainController()
-    app.get("hello", use: blockchain.greet)
+    let blockchainApp = app.grouped("blockchain")
+    blockchainApp.get("", use: blockchain.getBlockchain)
 }

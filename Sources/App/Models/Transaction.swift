@@ -31,4 +31,9 @@ final class Transaction: Content {
     private enum CodingKeys: CodingKey {
         case from, to, amount, transactionType
     }
+    
+    func updateAmoutFees(_ fees: Double) {
+        self.fees = self.amount * fees
+        self.amount -= self.fees
+    }
 }

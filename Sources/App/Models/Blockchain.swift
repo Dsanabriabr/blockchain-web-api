@@ -11,6 +11,7 @@ import Vapor
 final class Blockchain: Content {
     
     private (set) var blocks: [Block] = []
+    private (set) var smartContracts: [SmartContract] = []
     
     init(genisBlock: Block) {
         addBlock(genisBlock)
@@ -24,6 +25,12 @@ final class Blockchain: Content {
         if self.blocks.isEmpty {
             block.previousHash = "000000000000000"
             block.hash = generateHash(for: block)
+        }
+        
+        self.smartContracts.forEach { contract in
+            block.transactions.forEach { transaction in
+                contract.apply(transaction: transaction)
+            }
         }
         
         self.blocks.append(block)
